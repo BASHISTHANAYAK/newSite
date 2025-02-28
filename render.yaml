@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: eatoessaas
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: postgresql://testeatoes_user:AaRLQoa4EpRND9IPnttn4Ddwu5jDjKav@dpg-cv0ld42j1k6c73eage6g-a.oregon-postgres.render.com/testeatoes?sslmode=require
+      - key: PORT
+        value: 3000
+      - key: SESSION_SECRET
+        generateValue: true
+    healthCheckPath: /api/health
+    autoDeploy: true
