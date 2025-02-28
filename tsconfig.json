@@ -14,7 +14,7 @@
     "allowImportingTsExtensions": true,
     "moduleResolution": "bundler",
     "baseUrl": ".",
-    "types": ["node"],
+    "types": ["node", "react-helmet"],
     "paths": {
       "@db": ["./db/index.ts"],
       "@db/*": ["./db/*"],
