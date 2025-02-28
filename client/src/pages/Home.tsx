@@ -1,11 +1,10 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
-import Features from "@/components/sections/Features";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import Clients from "@/components/sections/Clients";
-import { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { motion, AnimatePresence } from "framer-motion";
 import { Blog } from "@/components/ui/blog-section";
@@ -14,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2, ChevronRight } from "lucide-react";
 
+const Features = React.lazy(() => import('../components/sections/Features'));
 // Lazy load components that aren't needed immediately
 const LazyFeatures = lazy(() => import("@/components/sections/Features"));
 const LazyClients = lazy(() => import("@/components/sections/Clients"));
@@ -57,19 +57,33 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { t } = useTranslation();
 
+  // useEffect(() => {
+  //   const checkIfMobile = () => {
+  //     setIsMobile(window.innerWidth < 768);
+  //   };
+    
+  //   checkIfMobile();
+  //   window.addEventListener('resize', checkIfMobile);
+    
+  //   // Mark as loaded after initial render
+  //   setIsLoaded(true);
+    
+  //   return () => window.removeEventListener('resize', checkIfMobile);
+  // }, []);
+
+
+
   useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-    
-    // Mark as loaded after initial render
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+  
+    const handleResize = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mediaQuery.addEventListener("change", handleResize);
+  
     setIsLoaded(true);
-    
-    return () => window.removeEventListener('resize', checkIfMobile);
+    return () => mediaQuery.removeEventListener("change", handleResize);
   }, []);
+  
 
   const structuredData = {
     "@context": "https://schema.org",
