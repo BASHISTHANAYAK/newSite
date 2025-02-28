@@ -8,6 +8,8 @@ async function testConnection() {
     throw new Error('DATABASE_URL is not defined');
   }
 
+  console.log('Database URL:', process.env.DATABASE_URL);
+
   const sql = postgres(process.env.DATABASE_URL, { 
     max: 1,
     ssl: { rejectUnauthorized: false }
@@ -24,4 +26,4 @@ async function testConnection() {
   }
 }
 
-testConnection();
+testConnection().catch(console.error);
